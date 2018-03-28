@@ -1,0 +1,389 @@
+{
+  "nodes": [
+    {
+      "id": "MixolydianSharp5Sharp11",
+      "label": "Mixolydian#5#11",
+      "x": 0,
+      "y": 0,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "LydianSharp5",
+      "label": "Lydian#5",
+      "x": 1,
+      "y": 0,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "Lydian",
+      "label": "Lydian",
+      "x": 2,
+      "y": 1,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "Ionian",
+      "label": "Ionian",
+      "x": 2.5,
+      "y": 2,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "MixolydianSharp11",
+      "label": "Mixolydian#11",
+      "x": 1.5,
+      "y": 2,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "MixolydianSharp11Flat13",
+      "label": "Mixolydian#11b13",
+      "x": 0.5,
+      "y": 2,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "Mixolydian",
+      "label": "Mixolydian",
+      "x": 2,
+      "y": 3,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "MelodicMinor",
+      "label": "MelodicMinor",
+      "x": 3,
+      "y": 3,
+      "size": 5,
+      "color": "#FFC900"
+    },
+    {
+      "id": "MelodicMinorFlat9",
+      "label": "MelodicMinorb9",
+      "x": 4,
+      "y": 3,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "Dorian",
+      "label": "Dorian",
+      "x": 2.5,
+      "y": 4,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "MixolydianFlat13",
+      "label": "Mixolydianb13",
+      "x": 1.5,
+      "y": 4,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "MixolydianFlat5Flat13",
+      "label": "Mixolydianb5b13",
+      "x": 0.5,
+      "y": 4,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "Aeolian",
+      "label": "Aeolian",
+      "x": 2,
+      "y": 5,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "DorianFlat9",
+      "label": "Dorianb9",
+      "x": 3,
+      "y": 5,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "DorianFlat8Flat9",
+      "label": "Dorianb9b8",
+      "x": 4,
+      "y": 5,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "Phrygian",
+      "label": "Phrygian",
+      "x": 2.5,
+      "y": 6,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "LocrianNat9",
+      "label": "LocrianNat9",
+      "x": 1.5,
+      "y": 6,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "LocrianNat9Flat4",
+      "label": "Locrian9b4",
+      "x": 0.5,
+      "y": 6,
+      "size": 5,
+      "color": "#aaa"
+    },
+    {
+      "id": "Locrian",
+      "label": "Locrian",
+      "x": 2,
+      "y": 7,
+      "size": 5,
+      "color": "#ff6600"
+    },
+    {
+      "id": "Altered",
+      "label": "Altered",
+      "x": 1.5,
+      "y": 8,
+      "size": 5,
+      "color": "#FFC900"
+
+    },
+    {
+      "id": "AlteredNat9",
+      "label": "AlteredNat9",
+      "x": 0.5,
+      "y": 8,
+      "size": 5,
+      "color": "#aaa"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "label": "lower7",
+      "source": "LydianSharp5",
+      "target": "MixolydianSharp5Sharp11",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e1",
+      "label": "lower#5",
+      "source": "LydianSharp5",
+      "target": "Lydian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e2",
+      "label": "lower7",
+      "source": "Lydian",
+      "target": "MixolydianSharp11",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e3",
+      "label": "lower#11",
+      "source": "Lydian",
+      "target": "Ionian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e4",
+      "label": "lower6",
+      "source": "MixolydianSharp11",
+      "target": "MixolydianSharp11Flat13",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e5",
+      "label": "lower#11",
+      "source": "MixolydianSharp11",
+      "target": "Mixolydian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e6",
+      "label": "lower7",
+      "source": "Ionian",
+      "target": "Mixolydian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e7",
+      "label": "lower3",
+      "source": "Ionian",
+      "target": "MelodicMinor",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e8",
+      "label": "lower2",
+      "source": "MelodicMinor",
+      "target": "MelodicMinorFlat9",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e9",
+      "label": "lower6",
+      "source": "Mixolydian",
+      "target": "MixolydianFlat13",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e10",
+      "label": "lower3",
+      "source": "Mixolydian",
+      "target": "Dorian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e11",
+      "label": "lower7",
+      "source": "MelodicMinor",
+      "target": "Dorian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e12",
+      "label": "lower5",
+      "source": "MixolydianFlat13",
+      "target": "MixolydianFlat5Flat13",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e13",
+      "label": "lower3",
+      "source": "MixolydianFlat13",
+      "target": "Aeolian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e14",
+      "label": "lower6",
+      "source": "Dorian",
+      "target": "Aeolian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e15",
+      "label": "lower9",
+      "source": "Dorian",
+      "target": "DorianFlat9",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e16",
+      "label": "lower1",
+      "source": "DorianFlat9",
+      "target": "DorianFlat8Flat9",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e17",
+      "label": "lower4",
+      "source": "LocrianNat9",
+      "target": "LocrianNat9Flat4",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e18",
+      "label": "lower5",
+      "source": "Aeolian",
+      "target": "LocrianNat9",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e19",
+      "label": "lower9",
+      "source": "Aeolian",
+      "target": "Phrygian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e20",
+      "label": "lower6",
+      "source": "DorianFlat9",
+      "target": "Phrygian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e21",
+      "label": "lower9",
+      "source": "DorianFlat9",
+      "target": "Phrygian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e25",
+      "label": "lower9",
+      "source": "LocrianNat9",
+      "target": "Locrian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e22",
+      "label": "lower5",
+      "source": "Phrygian",
+      "target": "Locrian",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e23",
+      "label": "lower11",
+      "source": "Locrian",
+      "target": "Altered",
+      "color": "#ccc",
+      "type": "arrow"
+    },
+    {
+      "id": "e24",
+      "label": "lower3",
+      "source": "Altered",
+      "target": "AlteredNat9",
+      "color": "#ccc",
+      "type": "arrow"
+    }
+  ]
+}
+

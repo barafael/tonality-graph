@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <style type="text/css">
+#container {
+    top: 50;
+    bottom: 50;
+    left: 50;
+    right: 50;
+    position: absolute;
+}
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script src="sigma.js/build/sigma.min.js"></script>
+        <script src="sigma.js/build/plugins/sigma.parsers.json.min.js"></script>
+        <script src="sigma.js/build/plugins/sigma.renderers.edgeLabels.min.js"></script>
+
+        <script>
+            sigma.parsers.json('data.json', {
+                renderer: {
+                    container: 'container',
+                    type: "canvas"
+                },
+                settings: {
+                    //edgeLabelSize: 'proportional'
+                }
+            },
+                function(s) {
+                    s.bind('clickNode', function(e) {
+                        var filename = "./scales/audio/" + e.data.node.id + ".mscz.mp3";
+                        console.log(filename);
+                        var a = new Audio(filename);
+                        a.play();
+                    });
+                }
+
+            );
+        </script>
+    </body>
+</html>
