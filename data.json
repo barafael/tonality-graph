@@ -167,9 +167,9 @@
 
     },
     {
-      "id": "AlteredNat9",
-      "label": "AlteredNat9",
-      "x": 0.5,
+      "id": "AlteredFlat9Nat9",
+      "label": "Alteredb9Nat9",
+      "x": 0,
       "y": 8,
       "size": 12,
       "color": "#aaa"
@@ -314,14 +314,6 @@
     },
     {
       "id": "e17",
-      "label": "lower4",
-      "source": "LocrianNat9",
-      "target": "LocrianNat9Flat4",
-      "color": "#ccc",
-      "type": "arrow"
-    },
-    {
-      "id": "e18",
       "label": "lower5",
       "source": "Aeolian",
       "target": "LocrianNat9",
@@ -329,7 +321,7 @@
       "type": "arrow"
     },
     {
-      "id": "e19",
+      "id": "e18",
       "label": "lower9",
       "source": "Aeolian",
       "target": "Phrygian",
@@ -337,7 +329,7 @@
       "type": "arrow"
     },
     {
-      "id": "e20",
+      "id": "e19",
       "label": "lower6",
       "source": "DorianFlat9",
       "target": "Phrygian",
@@ -345,15 +337,15 @@
       "type": "arrow"
     },
     {
-      "id": "e21",
-      "label": "lower9",
-      "source": "DorianFlat9",
-      "target": "Phrygian",
+      "id": "e20",
+      "label": "lower4",
+      "source": "LocrianNat9",
+      "target": "LocrianNat9Flat4",
       "color": "#ccc",
       "type": "arrow"
     },
     {
-      "id": "e25",
+      "id": "e21",
       "label": "lower9",
       "source": "LocrianNat9",
       "target": "Locrian",
@@ -380,7 +372,7 @@
       "id": "e24",
       "label": "lower3",
       "source": "Altered",
-      "target": "AlteredNat9",
+      "target": "AlteredFlat9Nat9",
       "color": "#ccc",
       "type": "arrow"
     }
