@@ -17,21 +17,43 @@
         <script src="sigma.js/build/plugins/sigma.renderers.edgeLabels.min.js"></script>
 
         <script>
+            // Avoid playing multiple files simultaneously
+            var playing = false;
             sigma.parsers.json('data.json', {
                 renderer: {
                     container: 'container',
                     type: "canvas"
                 },
                 settings: {
-                    //edgeLabelSize: 'proportional'
+                    edgeLabelSize: 'fixed',
+                    borderSize: 0,
+                    defaultNodeBorderColor: "f00",
+                    sideMargin: 15,
+                    defaultLavelSize: 24,
+                    minArrowSize: 8,
+                    zoomMin: 0.05,
+                    zoomMax: 0.2,
+                    minEdgeSize: 4,
+                    minEdgeSize: 4,
+                    minNodeSize: 8,
+                    maxNodeSize: 8
                 }
             },
                 function(s) {
+                    // Initial zoom level
+                    s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 0.1 });
+
+                    // Play audio on node click
                     s.bind('clickNode', function(e) {
-                        var filename = "./scales/audio/" + e.data.node.id + ".mscz.mp3";
-                        console.log(filename);
-                        var a = new Audio(filename);
-                        a.play();
+                        // Skip if audio is currently playing
+                        if (playing) { return }
+
+                        // Otherwise start playing, setting the guard flag
+                        var filename = "./scales/audio/" + e.data.node.id + ".mp3";
+                        var audio = new Audio(filename);
+                        audio.onplaying = function() { playing = true }
+                        audio.onended = function() { playing = false }
+                        audio.play();
                     });
                 }
 
