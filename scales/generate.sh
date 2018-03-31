@@ -2,6 +2,12 @@
 
 export QT_QPA_PLATFORM=offscreen
 
+# necessary packages for this skript to work on ubuntu:
+# musescore
+# lame
+# sox
+# libsox-fmt-mp3
+
 rm -rfv audio
 mkdir audio
 
