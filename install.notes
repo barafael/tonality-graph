@@ -1,10 +1,1 @@
 sudo apt install musescore sox lame libsox-fmt-mp3
-sudo apt install nodejs
-sudo apt-get install python-pip
-sudo  pip install https://github.com/google/closure-linter/zipball/master
-sudo pip install --upgrade pip
-sudo apt install npm
-cd sigma.js/
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-npm install
-npm run build
