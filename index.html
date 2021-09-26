@@ -28,109 +28,115 @@
             <text text-anchor="middle" alignment-baseline="central" x="80%" y="96%" class="small" fill="gray"  >Exotic/Theoretical Modes</text>
 
             <!-- Scale/Chord bobbles with labels -->
+
+              <style>
+                .nonclick { pointer-events: none;  }
+                .heavy { font: bold 30px sans-serif; }
+              </style>
+
             <!-- mixo#5#11 -->
             <circle cx="15%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('MixolydianSharp5Sharp11')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="10%" class="small">Mixo #5 #11</text>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="10%" class="nonclick">Mixo #5 #11</text>
 
             <!-- lydian#5 -->
             <circle cx="35%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('LydianSharp5')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="10%" class="small">Lydian#5</text>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="10%" class="nonclick">Lydian#5</text>
 
             <!-- lydian -->
             <circle cx="45%" cy="20%" r="4%" stroke="black" stroke-width="3" fill="orange"
                 onclick="play('Lydian')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="20%" class="small">Lydian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="20%" class="nonclick">Lydian</text>
 
             <!-- mixo#11b13 -->
             <circle cx="15%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('MixolydianSharp11Flat13')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="30%" class="small">Mixo #11 b13</text>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="30%" class="nonclick">Mixo #11 b13</text>
 
             <!-- mixo#11 -->
             <circle cx="35%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('MixolydianSharp11')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="30%" class="small">Mixo #11</text>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="30%" class="nonclick">Mixo #11</text>
 
             <!-- ionian -->
             <circle cx="55%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="orange"
                 onclick="play('Ionian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="30%" class="small">Ionian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="30%" class="nonclick">Ionian</text>
 
             <!-- mixo -->
             <circle cx="45%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="orange" 
                 onclick="play('Mixolydian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="40%" class="small">Mixolydian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="40%" class="nonclick">Mixolydian</text>
 
             <!-- melmin -->
             <circle cx="65%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('MelodicMinor')" />
-            <text text-anchor="middle" alignment-baseline="central" x="65%" y="40%" class="small">Melodic Minor</text>
+            <text text-anchor="middle" alignment-baseline="central" x="65%" y="40%" class="nonclick">Melodic Minor</text>
 
             <!-- melminb9 -->
             <circle cx="85%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('MelodicMinorFlat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="85%" y="40%" class="small">MelMin b9</text>
+            <text text-anchor="middle" alignment-baseline="central" x="85%" y="40%" class="nonclick">MelMin b9</text>
 
             <!-- mixob5b13 -->
             <circle cx="15%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('MixolydianFlat5Flat13')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="50%" class="small">Mixo b5 b13</text>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="50%" class="nonclick">Mixo b5 b13</text>
 
             <!-- mixob13 -->
             <circle cx="35%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('MixolydianFlat13')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="50%" class="small">Mixo b13</text>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="50%" class="nonclick">Mixo b13</text>
 
             <!-- dorian -->
             <circle cx="55%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="orange"
                 onclick="play('Dorian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="50%" class="small">Dorian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="50%" class="nonclick">Dorian</text>
 
             <!-- aeolian -->
             <circle cx="45%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="orange"
                 onclick="play('Aeolian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="60%" class="small">Aeolian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="60%" class="nonclick">Aeolian</text>
 
             <!-- dorianb9 -->
             <circle cx="65%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('DorianFlat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="65%" y="60%" class="small">Dorian b9</text>
+            <text text-anchor="middle" alignment-baseline="central" x="65%" y="60%" class="nonclick">Dorian b9</text>
 
             <!-- dorianb9b8 -->
             <circle cx="85%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('DorianFlat8Flat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="85%" y="60%" class="small">Dorian b9 b8</text>
+            <text text-anchor="middle" alignment-baseline="central" x="85%" y="60%" class="nonclick">Dorian b9 b8</text>
 
             <!-- locrian9b4 -->
             <circle cx="15%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('LocrianNat9Flat4')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="70%" class="small">Locrian9b4</text>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="70%" class="nonclick">Locrian9b4</text>
 
             <!-- locriannat9 -->
             <circle cx="35%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('LocrianNat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="70%" class="small">Locrian nat9</text>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="70%" class="nonclick">Locrian nat9</text>
 
             <!-- phrygian -->
             <circle cx="55%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="orange"
                 onclick="play('Phrygian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="70%" class="small">Phrygian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="70%" class="nonclick">Phrygian</text>
 
             <!-- locrian -->
             <circle cx="45%" cy="80%" r="4%" stroke="black" stroke-width="3" fill="orange" 
                 onclick="play('Locrian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="80%" class="small">Locrian</text>
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="80%" class="nonclick">Locrian</text>
 
             <!-- altb9nat9 -->
             <circle cx="15%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="gray"
                 onclick="play('AlteredFlat9Nat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="90%" class="small">Altered b9 nat9</text>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="90%" class="nonclick">Altered b9 nat9</text>
             <!-- altered -->
             <circle cx="35%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="yellow"
                 onclick="play('Altered')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="90%" class="small">Altered</text>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="90%" class="nonclick">Altered</text>
 
             <!-- Edges -->
             <defs>
