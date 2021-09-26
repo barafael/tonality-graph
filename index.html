@@ -1,119 +1,247 @@
 <!DOCTYPE html>
 <html style="width:100%;height:100%;">
+    <head>
+        <title>Semitones make a world of difference</title>
+    </head>
+    <body style="width:100%;height:100%;margin:0;">
+        <svg height="100%" width="100%">
+            <!-- Background -->
+            <rect width="100%" height="100%" />
+            <defs>
+                <linearGradient id='a' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(180,0.5,0.5)'>
+                    <stop offset='0'  stop-color='#80F'/>
+                    <stop offset='1'  stop-color='#f40'/>
+                </linearGradient>
+            </defs>
+            <pattern id='b'  width='24' height='24' patternUnits='userSpaceOnUse'>
+                <circle  fill='#ffffff' cx='12' cy='12' r='12'/>
+            </pattern>
 
-<head>
-    <title>Semitones make a world of difference</title>
-</head>
+            <rect width='100%' height='100%' fill='url(#a)'/>
+            <rect width='100%' height='100%' fill='url(#b)' fill-opacity='0.1'/>
 
-<body style="width:100%;height:100%;margin:0;">
-    <svg height="100%" width="100%">
-         <rect fill="blue" width="100%" height="100%" />
+            <!-- It is legend -->
+            <rect x="60%" y="80%" width = "40%" height = "20%" stroke="black" stroke-width="0.5%" fill="lightgray"/>
+            <text text-anchor="middle" alignment-baseline="central" x="80%" y="82%" class="small">Legend</text>
+            <text text-anchor="middle" alignment-baseline="central" x="80%" y="86%" class="small" fill="orange">"Church" Modes of Major scale</text>
+            <text text-anchor="middle" alignment-baseline="central" x="80%" y="91%" class="small" fill="yellow">Modes of Melodic Minor</text>
+            <text text-anchor="middle" alignment-baseline="central" x="80%" y="96%" class="small" fill="gray"  >Exotic/Theoretical Modes</text>
 
-         <--! mixo#5#11 -->
-         <circle cx="15%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('MixolydianSharp5Sharp11')" />
+            <!-- Scale/Chord bobbles with labels -->
+            <!-- mixo#5#11 -->
+            <circle cx="15%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('MixolydianSharp5Sharp11')" />
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="10%" class="small">Mixo #5 #11</text>
 
-         <--! lydian#5 -->
-         <circle cx="35%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('LydianSharp5')" />
+            <!-- lydian#5 -->
+            <circle cx="35%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('LydianSharp5')" />
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="10%" class="small">Lydian#5</text>
 
-         <--! lydian -->
-         <circle cx="45%" cy="20%" r="4%" stroke="black" stroke-width="3" fill="orange"
-            onclick="play('Lydian')"/>
+            <!-- lydian -->
+            <circle cx="45%" cy="20%" r="4%" stroke="black" stroke-width="3" fill="orange"
+                onclick="play('Lydian')"/>
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="20%" class="small">Lydian</text>
 
-         <--! mixo#11b13 -->
-         <circle cx="15%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('MixolydianSharp11Flat13')"/>
+            <!-- mixo#11b13 -->
+            <circle cx="15%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('MixolydianSharp11Flat13')"/>
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="30%" class="small">Mixo #11 b13</text>
 
-         <--! mixo#11 -->
-         <circle cx="35%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('MixolydianSharp11')"/>
+            <!-- mixo#11 -->
+            <circle cx="35%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('MixolydianSharp11')"/>
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="30%" class="small">Mixo #11</text>
 
-         <--! ionian -->
-         <circle cx="55%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="orange"
-            onclick="play('Ionian')" />
+            <!-- ionian -->
+            <circle cx="55%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="orange"
+                onclick="play('Ionian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="30%" class="small">Ionian</text>
 
-         <--! mixo -->
-         <circle cx="45%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="orange" 
-            onclick="play('Mixolydian')" />
+            <!-- mixo -->
+            <circle cx="45%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="orange" 
+                onclick="play('Mixolydian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="40%" class="small">Mixolydian</text>
 
-         <--! melmin -->
-         <circle cx="65%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('MelodicMinor')" />
+            <!-- melmin -->
+            <circle cx="65%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('MelodicMinor')" />
+            <text text-anchor="middle" alignment-baseline="central" x="65%" y="40%" class="small">Melodic Minor</text>
 
-         <--! melminb9 -->
-         <circle cx="85%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('MelodicMinorFlat9')" />
+            <!-- melminb9 -->
+            <circle cx="85%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('MelodicMinorFlat9')" />
+            <text text-anchor="middle" alignment-baseline="central" x="85%" y="40%" class="small">MelMin b9</text>
 
-         <--! mixob5b13 -->
-         <circle cx="15%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('MixolydianFlat5Flat13')" />
+            <!-- mixob5b13 -->
+            <circle cx="15%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('MixolydianFlat5Flat13')" />
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="50%" class="small">Mixo b5 b13</text>
 
-         <--! mixob13 -->
-         <circle cx="35%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('MixolydianFlat13')" />
+            <!-- mixob13 -->
+            <circle cx="35%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('MixolydianFlat13')" />
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="50%" class="small">Mixo b13</text>
 
-         <--! dorian -->
-         <circle cx="55%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="orange"
-            onclick="play('Dorian')" />
+            <!-- dorian -->
+            <circle cx="55%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="orange"
+                onclick="play('Dorian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="50%" class="small">Dorian</text>
 
-         <--! aeolian -->
-         <circle cx="45%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="orange"
-            onclick="play('Aeolian')" />
+            <!-- aeolian -->
+            <circle cx="45%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="orange"
+                onclick="play('Aeolian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="60%" class="small">Aeolian</text>
 
-         <--! dorianb9 -->
-         <circle cx="65%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('DorianFlat9')" />
+            <!-- dorianb9 -->
+            <circle cx="65%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('DorianFlat9')" />
+            <text text-anchor="middle" alignment-baseline="central" x="65%" y="60%" class="small">Dorian b9</text>
 
-         <--! dorianb9b8 -->
-         <circle cx="85%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('DorianFlat8Flat9')" />
+            <!-- dorianb9b8 -->
+            <circle cx="85%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('DorianFlat8Flat9')" />
+            <text text-anchor="middle" alignment-baseline="central" x="85%" y="60%" class="small">Dorian b9 b8</text>
 
-         <--! locrian9b4 -->
-         <circle cx="15%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('LocrianNat9Flat4')" />
+            <!-- locrian9b4 -->
+            <circle cx="15%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('LocrianNat9Flat4')" />
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="70%" class="small">Locrian9b4</text>
 
-         <--! locriannat9 -->
-         <circle cx="35%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('LocrianNat9')" />
+            <!-- locriannat9 -->
+            <circle cx="35%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('LocrianNat9')" />
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="70%" class="small">Locrian nat9</text>
 
-         <--! phrygian -->
-         <circle cx="55%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="orange"
-            onclick="play('Phrygian')" />
+            <!-- phrygian -->
+            <circle cx="55%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="orange"
+                onclick="play('Phrygian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="55%" y="70%" class="small">Phrygian</text>
 
-         <--! locrian -->
-         <circle cx="45%" cy="80%" r="4%" stroke="black" stroke-width="3" fill="orange" 
-            onclick="play('Locrian')" />
+            <!-- locrian -->
+            <circle cx="45%" cy="80%" r="4%" stroke="black" stroke-width="3" fill="orange" 
+                onclick="play('Locrian')" />
+            <text text-anchor="middle" alignment-baseline="central" x="45%" y="80%" class="small">Locrian</text>
 
-         <--! altb9nat9 -->
-         <circle cx="15%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="gray"
-            onclick="play('AlteredFlat9Nat9')" />
+            <!-- altb9nat9 -->
+            <circle cx="15%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="gray"
+                onclick="play('AlteredFlat9Nat9')" />
+            <text text-anchor="middle" alignment-baseline="central" x="15%" y="90%" class="small">Altered b9 nat9</text>
+            <!-- altered -->
+            <circle cx="35%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="yellow"
+                onclick="play('Altered')" />
+            <text text-anchor="middle" alignment-baseline="central" x="35%" y="90%" class="small">Altered</text>
 
-         <--! altered -->
-         <circle cx="35%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-            onclick="play('Altered')" />
-      </svg>
-    <script>
-        var playing = false;
+            <!-- Edges -->
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="1.5" orient="auto">
+                    <polygon points="0 0, 6 1.5, 0 3" />
+                </marker>
+            </defs>
 
-        function play(e) {
-            // Skip if audio is currently playing
-            if (playing) {
-                return
+            <!-- First column -->
+            <line x1="19%" y1="10%" x2="28.5%" y2="10%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="19%" y1="30%" x2="28.5%" y2="30%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="19%" y1="50%" x2="28.5%" y2="50%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="19%" y1="70%" x2="28.5%" y2="70%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="19%" y1="90%" x2="28.5%" y2="90%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Second column forwards -->
+            <line x1="38%" y1="12.5%" x2="41%" y2="15.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="38%" y1="32.5%" x2="41%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="38%" y1="52.5%" x2="41%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="38%" y1="72.5%" x2="41%" y2="75.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Third column backward -->
+            <line x1="42%" y1="22.5%" x2="39%" y2="25.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="42%" y1="42.5%" x2="39%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="42%" y1="62.5%" x2="39%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="42%" y1="82.5%" x2="39%" y2="85.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Fourth column forward -->
+            <line x1="48%" y1="22.5%" x2="51%" y2="25.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="48%" y1="42.5%" x2="51%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="48%" y1="62.5%" x2="51%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Fifth column backward -->
+            <line x1="52%" y1="32.5%" x2="49%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="52%" y1="52.5%" x2="49%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="52%" y1="72.5%" x2="49%" y2="75.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Sixth column forwards -->
+            <line x1="58%" y1="32.5%" x2="61%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="58%" y1="52.5%" x2="61%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Seventh column backward -->
+            <line x1="62%" y1="42.5%" x2="59%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="62%" y1="62.5%" x2="59%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Last column forwards -->
+            <line x1="69%" y1="40%" x2="78.5%" y2="40%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+            <line x1="69%" y1="60%" x2="78.5%" y2="60%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
+
+            <!-- Edge labels -->
+            <!-- First column -->
+            <text x="22%" y="9%" class="small">lower 7</text>
+            <text x="22%" y="29%" class="small">lower 6</text>
+            <text x="22%" y="49%" class="small">lower 5</text>
+            <text x="22%" y="69%" class="small">lower 4</text>
+            <text x="22%" y="89%" class="small">lower 3</text>
+
+            <!-- Second forward column -->
+            <text x="35%" y="16%" class="small">lower #5</text>
+            <text x="35%" y="36%" class="small">lower #4</text>
+            <text x="35%" y="56%" class="small">lower 3</text>
+            <text x="35%" y="76%" class="small">lower 9</text>
+
+            <!-- Third backward column -->
+            <text x="35%" y="24%" class="small">lower 7</text>
+            <text x="35%" y="44%" class="small">lower 6</text>
+            <text x="35%" y="64%" class="small">lower 5</text>
+            <text x="35%" y="84%" class="small">lower 4</text>
+
+            <!-- Fourth forward column -->
+            <text x="51%" y="24%" class="small">lower #11</text>
+            <text x="51%" y="44%" class="small">lower 3</text>
+            <text x="51%" y="64%" class="small">lower 2</text>
+
+            <!-- Fifth backward column -->
+            <text x="51%" y="36%" class="small">lower 7</text>
+            <text x="51%" y="56%" class="small">lower 6</text>
+            <text x="51%" y="76%" class="small">lower 5</text>
+
+            <!-- Sixth forward column -->
+            <text x="61%" y="34%" class="small">lower 3</text>
+            <text x="61%" y="54%" class="small">lower 2</text>
+
+            <!-- Seventh backward column -->
+            <text x="61%" y="46%" class="small">lower 7</text>
+            <text x="61%" y="66%" class="small">lower 6</text>
+
+            <!-- Last column -->
+            <text x="72%" y="39%" class="small">lower 2</text>
+            <text x="72%" y="59%" class="small">lower 1</text>
+        </svg>
+        <script>
+            var playing = false;
+            
+            function play(e) {
+                // Skip if audio is currently playing
+                if (playing) {
+                    return
+                }
+            
+                // Otherwise start playing, setting the guard flag
+                var filename = "./scales/audio/" + e + ".mp3";
+                var audio = new Audio(filename);
+                audio.onplaying = function() {
+                    playing = true
+                }
+                audio.onended = function() {
+                    playing = false
+                }
+                audio.play();
             }
-
-            // Otherwise start playing, setting the guard flag
-            var filename = "./scales/audio/" + e + ".mp3";
-            var audio = new Audio(filename);
-            audio.onplaying = function() {
-                playing = true
-            }
-            audio.onended = function() {
-                playing = false
-            }
-            audio.play();
-        }
-    </script>
-</body>
-
+        </script>
+    </body>
 </html>
