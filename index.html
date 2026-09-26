@@ -52,26 +52,25 @@
             height: 100%;
         }
 
-        /* Each mode is a pill in its family's color; hovering lifts it to show it can be played. */
+        /* Each mode is a tile. Tiles that share a border are one step apart. */
         .mode {
             cursor: pointer;
         }
 
-        .mode rect {
-            fill-opacity: 0.88;
-            stroke: rgba(30, 20, 40, 0.18);
-            filter: drop-shadow(0 2px 4px rgba(20, 10, 30, 0.18));
+        .mode polygon {
+            fill-opacity: 0.8;
             transition: filter 0.15s;
         }
 
-        .mode:hover rect {
-            filter: drop-shadow(0 4px 10px rgba(20, 10, 30, 0.3)) brightness(1.06);
+        .mode:hover polygon {
+            filter: brightness(1.08) drop-shadow(0 4px 10px rgba(20, 10, 30, 0.3));
         }
 
-        .mode.playing rect {
+        .mode.playing polygon {
             stroke: #fff;
-            stroke-width: 2.5;
-            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.85));
+            stroke-width: 3;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8));
         }
 
         .mode text {
@@ -81,26 +80,25 @@
             dominant-baseline: central;
         }
 
-        .church rect { fill: var(--church); }
-        .melmin rect { fill: var(--melmin); }
-        .exotic rect { fill: var(--exotic); }
+        .church polygon { fill: var(--church); }
+        .melmin polygon { fill: var(--melmin); }
+        .exotic polygon { fill: var(--exotic); fill-opacity: 0.6; }
 
-        /* The steps between modes: just what changes, in the direction it goes,
-           on a faint pill that switches with the ink where the background turns dark. */
+        /* The steps sit on the borders between tiles, as small badges. */
         .step {
             pointer-events: none;
         }
 
+        .step rect {
+            fill: rgba(30, 20, 45, 0.78);
+        }
+
         .step text {
+            fill: var(--ink-light);
             font-size: 13px;
             text-anchor: middle;
             dominant-baseline: central;
         }
-
-        .step.dark rect { fill: rgba(255, 248, 240, 0.4); }
-        .step.dark text { fill: var(--ink-dark); }
-        .step.light rect { fill: rgba(25, 18, 40, 0.4); }
-        .step.light text { fill: var(--ink-light); }
 
         .legend {
             position: absolute;
@@ -216,43 +214,66 @@
         const w = 1600, h = 1000; // fixed drawing size, scaled to fit the screen
         let playing = null;
 
+        // Shrink a polygon by d on every side, leaving a thin gap between tiles.
+        function inset(points, d) {
+            const n = points.length;
+            const area = points.reduce((sum, [x1, y1], i) => {
+                const [x2, y2] = points[(i + 1) % n];
+                return sum + x1 * y2 - x2 * y1;
+            }, 0);
+            const lines = points.map(([x1, y1], i) => {
+                const [x2, y2] = points[(i + 1) % n];
+                const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) * Math.sign(area);
+                return [x1 - dy / len * d, y1 + dx / len * d, dx, dy];
+            });
+            return lines.map(([x, y, dx, dy], i) => {
+                const [px, py, pdx, pdy] = lines[(i + n - 1) % n];
+                const t = ((x - px) * dy - (y - py) * dx) / (pdx * dy - pdy * dx);
+                return [px + pdx * t, py + pdy * t];
+            });
+        }
+
         function draw() {
-            // Where the drawing ends up on screen, to match the step ink to the background.
-            const box = svg.getBoundingClientRect();
-            const scale = Math.min(box.width / w, box.height / h);
-            const top = box.top + (box.height - h * scale) / 2;
-            const ink = y => top + y * scale < 0.62 * innerHeight ? "dark" : "light";
             const pos = {};
             for (const [id, , x, y] of nodes) pos[id] = [x / 100 * w, y / 100 * h];
+            // Neighbors are a diagonal step apart, so diamonds of this size tile the lattice.
+            const a = 0.1 * w, b = 0.1 * h;
 
             let out = "";
-            for (const [from, to, label] of edges) {
-                const [x1, y1] = pos[from], [x2, y2] = pos[to];
-                const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
-                // Text follows the step's direction but never reads upside down.
-                const leftward = x2 < x1;
-                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + (leftward ? 180 : 0);
-                const text = leftward ? `\u2190 ${label}` : `${label} \u2192`;
-                out += `<g class="step ${ink(my)}" transform="translate(${mx},${my}) rotate(${angle})">
-                    <rect/><text>${text}</text>
+            for (const [id, label, , , kind] of nodes) {
+                const [x, y] = pos[id];
+                let tile;
+                if (kind !== "exotic") {
+                    tile = [[x, y - b], [x + a, y], [x, y + b], [x - a, y]];
+                } else {
+                    // Fringe modes are flags that fit against their neighbor's diamond and taper
+                    // outward, so fringe flags above and below each other only meet at a corner.
+                    const side = x < w / 2 ? -1 : 1, cx = x - 2 * a * side, ox = x + 0.12 * w * side;
+                    tile = [[cx, y - b], [ox, y - 0.45 * b], [ox, y + 0.45 * b], [cx, y + b], [cx + a * side, y]];
+                }
+                const points = inset(tile, 4).map(p => p.join(",")).join(" ");
+                out += `<g class="mode ${kind}${id === playing ? " playing" : ""}" onclick="play('${id}')">
+                    <polygon points="${points}"/>
+                    <text x="${x}" y="${y}" font-size="21">${label}</text>
                 </g>`;
             }
 
-            for (const [id, label, , , kind] of nodes) {
-                const [x, y] = pos[id];
-                out += `<g class="mode ${kind}${id === playing ? " playing" : ""}"
-                    transform="translate(${x},${y})" onclick="play('${id}')">
-                    <rect/><text font-size="22">${label}</text>
+            const arrows = { "1,0": "\u2192", "-1,0": "\u2190", "1,1": "\u2198", "-1,1": "\u2199" };
+            for (const [from, to, label] of edges) {
+                const [x1, y1] = pos[from], [x2, y2] = pos[to];
+                const arrow = arrows[[Math.sign(x2 - x1), Math.sign(y2 - y1)]];
+                const text = x2 < x1 ? `${arrow} ${label}` : `${label} ${arrow}`;
+                out += `<g class="step" transform="translate(${(x1 + x2) / 2},${(y1 + y2) / 2})">
+                    <rect/><text>${text}</text>
                 </g>`;
             }
             svg.innerHTML = out;
 
-            // Wrap each label in a pill that fits its text.
-            for (const g of svg.querySelectorAll(".mode, .step")) {
+            // Fit each step badge to its text.
+            for (const g of svg.querySelectorAll(".step")) {
                 const t = g.querySelector("text").getBBox();
-                const [px, py] = g.classList.contains("mode") ? [18, 9] : [7, 2];
-                const height = t.height + 2 * py;
-                Object.entries({ x: t.x - px, y: t.y - py, width: t.width + 2 * px, height, rx: height / 2 })
+                const height = t.height + 4;
+                Object.entries({ x: t.x - 7, y: t.y - 2, width: t.width + 14, height, rx: height / 2 })
                     .forEach(([k, v]) => g.querySelector("rect").setAttribute(k, v));
             }
         }
