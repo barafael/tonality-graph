@@ -1,253 +1,252 @@
 <!DOCTYPE html>
-<html style="width:100%;height:100%;">
-    <head>
-        <title>Semitones make a world of difference</title>
-    </head>
-    <body style="width:100%;height:100%;margin:0;">
-        <svg height="100%" width="100%">
-            <!-- Background -->
-            <rect width="100%" height="100%" />
-            <defs>
-                <linearGradient id='a' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(180,0.5,0.5)'>
-                    <stop offset='0'  stop-color='#80F'/>
-                    <stop offset='1'  stop-color='#f40'/>
-                </linearGradient>
-            </defs>
-            <pattern id='b'  width='24' height='24' patternUnits='userSpaceOnUse'>
-                <circle  fill='#ffffff' cx='12' cy='12' r='12'/>
-            </pattern>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semitones make a world of difference</title>
+    <style>
+        :root {
+            --church: #f28f4e;
+            --melmin: #f6ce5b;
+            --exotic: #c9c2d3;
+            --ink-dark: #2b2034;
+            --ink-light: #fbf2e8;
+            --grid: rgba(120, 108, 140, 0.14);
+        }
 
-            <rect width='100%' height='100%' fill='url(#a)'/>
-            <rect width='100%' height='100%' fill='url(#b)' fill-opacity='0.1'/>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
-            <!-- It is legend -->
-            <rect x="60%" y="80%" width = "40%" height = "20%" stroke="black" stroke-width="0.5%" fill="lightgray"/>
-            <text text-anchor="middle" alignment-baseline="central" x="80%" y="82%" class="small">Legend</text>
-            <text text-anchor="middle" alignment-baseline="central" x="80%" y="86%" class="small" fill="orange">"Church" Modes of Major scale</text>
-            <text text-anchor="middle" alignment-baseline="central" x="80%" y="91%" class="small" fill="yellow">Modes of Melodic Minor</text>
-            <text text-anchor="middle" alignment-baseline="central" x="80%" y="96%" class="small" fill="gray"  >Exotic/Theoretical Modes</text>
+        /* Bright modes up top, dark modes at the bottom, on a fine grid. */
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background:
+                linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+                linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+                linear-gradient(to bottom, #fbe5bf 0%, #f3b98c 28%, #d17d88 52%, #6f4c8b 76%, #251e42 100%);
+            background-attachment: fixed;
+        }
 
-            <!-- Scale/Chord bobbles with labels -->
+        main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-width: 960px;
+            min-height: 640px;
+        }
 
-              <style>
-                .nonclick { pointer-events: none;  }
-                .heavy { font: bold 30px sans-serif; }
-              </style>
+        svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
 
-            <!-- mixo#5#11 -->
-            <circle cx="15%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('MixolydianSharp5Sharp11')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="10%" class="nonclick">Mixo #5 #11</text>
+        .node {
+            cursor: pointer;
+        }
 
-            <!-- lydian#5 -->
-            <circle cx="35%" cy="10%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('LydianSharp5')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="10%" class="nonclick">Lydian#5</text>
+        .node circle {
+            stroke: rgba(30, 20, 40, 0.55);
+            stroke-width: 1.5;
+            filter: drop-shadow(0 3px 6px rgba(20, 10, 30, 0.25));
+            transition: filter 0.15s, stroke 0.15s, stroke-width 0.15s;
+        }
 
-            <!-- lydian -->
-            <circle cx="45%" cy="20%" r="4%" stroke="black" stroke-width="3" fill="orange"
-                onclick="play('Lydian')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="20%" class="nonclick">Lydian</text>
+        .node:hover circle {
+            filter: drop-shadow(0 3px 6px rgba(20, 10, 30, 0.25)) brightness(1.08);
+        }
 
-            <!-- mixo#11b13 -->
-            <circle cx="15%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('MixolydianSharp11Flat13')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="30%" class="nonclick">Mixo #11 b13</text>
+        .node.playing circle {
+            stroke: #fff;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+        }
 
-            <!-- mixo#11 -->
-            <circle cx="35%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('MixolydianSharp11')"/>
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="30%" class="nonclick">Mixo #11</text>
+        .node text {
+            fill: var(--ink-dark);
+            font-weight: 600;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
 
-            <!-- ionian -->
-            <circle cx="55%" cy="30%" r="4%" stroke="black" stroke-width="3" fill="orange"
-                onclick="play('Ionian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="30%" class="nonclick">Ionian</text>
+        .church circle { fill: var(--church); }
+        .melmin circle { fill: var(--melmin); }
+        .exotic circle { fill: var(--exotic); }
 
-            <!-- mixo -->
-            <circle cx="45%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="orange" 
-                onclick="play('Mixolydian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="40%" class="nonclick">Mixolydian</text>
+        /* Edges and their labels switch ink where the background turns dark. */
+        .edge line { stroke-width: 2; }
+        .edge text { text-anchor: middle; dominant-baseline: central; }
+        .edge.dark line { stroke: var(--ink-dark); }
+        .edge.dark polygon, .edge.dark text { fill: var(--ink-dark); }
+        .edge.light line { stroke: var(--ink-light); }
+        .edge.light polygon, .edge.light text { fill: var(--ink-light); }
 
-            <!-- melmin -->
-            <circle cx="65%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('MelodicMinor')" />
-            <text text-anchor="middle" alignment-baseline="central" x="65%" y="40%" class="nonclick">Melodic Minor</text>
+        .legend {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(20, 14, 34, 0.45);
+            backdrop-filter: blur(6px);
+            color: var(--ink-light);
+            font-size: 14px;
+        }
 
-            <!-- melminb9 -->
-            <circle cx="85%" cy="40%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('MelodicMinorFlat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="85%" y="40%" class="nonclick">MelMin b9</text>
+        .legend h2 {
+            margin: 0 0 8px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
 
-            <!-- mixob5b13 -->
-            <circle cx="15%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('MixolydianFlat5Flat13')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="50%" class="nonclick">Mixo b5 b13</text>
+        .legend div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+        }
 
-            <!-- mixob13 -->
-            <circle cx="35%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('MixolydianFlat13')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="50%" class="nonclick">Mixo b13</text>
+        .legend span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(30, 20, 40, 0.55);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <svg id="graph"></svg>
+        <div class="legend">
+            <h2>Legend</h2>
+            <div><span style="background: var(--church)"></span>"Church" Modes of Major scale</div>
+            <div><span style="background: var(--melmin)"></span>Modes of Melodic Minor</div>
+            <div><span style="background: var(--exotic)"></span>Exotic/Theoretical Modes</div>
+        </div>
+    </main>
+    <script>
+        // [audio file name, label (\n breaks lines), x %, y %, kind]
+        const nodes = [
+            ["MixolydianSharp5Sharp11", "Mixo\n#5 #11",        15, 10, "exotic"],
+            ["LydianSharp5",            "Lydian#5",            35, 10, "melmin"],
+            ["Lydian",                  "Lydian",              45, 20, "church"],
+            ["MixolydianSharp11Flat13", "Mixo\n#11 b13",       15, 30, "exotic"],
+            ["MixolydianSharp11",       "Mixo #11",            35, 30, "melmin"],
+            ["Ionian",                  "Ionian",              55, 30, "church"],
+            ["Mixolydian",              "Mixolydian",          45, 40, "church"],
+            ["MelodicMinor",            "Melodic\nMinor",      65, 40, "melmin"],
+            ["MelodicMinorFlat9",       "MelMin b9",           85, 40, "exotic"],
+            ["MixolydianFlat5Flat13",   "Mixo\nb5 b13",        15, 50, "exotic"],
+            ["MixolydianFlat13",        "Mixo b13",            35, 50, "melmin"],
+            ["Dorian",                  "Dorian",              55, 50, "church"],
+            ["Aeolian",                 "Aeolian",             45, 60, "church"],
+            ["DorianFlat9",             "Dorian b9",           65, 60, "melmin"],
+            ["DorianFlat8Flat9",        "Dorian\nb9 b8",       85, 60, "exotic"],
+            ["LocrianNat9Flat4",        "Locrian9b4",          15, 70, "exotic"],
+            ["LocrianNat9",             "Locrian\nnat9",       35, 70, "melmin"],
+            ["Phrygian",                "Phrygian",            55, 70, "church"],
+            ["Locrian",                 "Locrian",             45, 80, "church"],
+            ["AlteredFlat9Nat9",        "Altered\nb9 nat9",    15, 90, "exotic"],
+            ["Altered",                 "Altered",             35, 90, "melmin"],
+        ];
 
-            <!-- dorian -->
-            <circle cx="55%" cy="50%" r="4%" stroke="black" stroke-width="3" fill="orange"
-                onclick="play('Dorian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="50%" class="nonclick">Dorian</text>
+        // [from, to, label]: lowering one note of `from` gives `to`
+        const edges = [
+            ["LydianSharp5",      "MixolydianSharp5Sharp11", "lower 7"],
+            ["MixolydianSharp11", "MixolydianSharp11Flat13", "lower 6"],
+            ["MixolydianFlat13",  "MixolydianFlat5Flat13",   "lower 5"],
+            ["LocrianNat9",       "LocrianNat9Flat4",        "lower 4"],
+            ["Altered",           "AlteredFlat9Nat9",        "lower 3"],
+            ["LydianSharp5",      "Lydian",                  "lower #5"],
+            ["MixolydianSharp11", "Mixolydian",              "lower #4"],
+            ["MixolydianFlat13",  "Aeolian",                 "lower 3"],
+            ["LocrianNat9",       "Locrian",                 "lower 9"],
+            ["Lydian",            "MixolydianSharp11",       "lower 7"],
+            ["Mixolydian",        "MixolydianFlat13",        "lower 6"],
+            ["Aeolian",           "LocrianNat9",             "lower 5"],
+            ["Locrian",           "Altered",                 "lower 4"],
+            ["Lydian",            "Ionian",                  "lower #11"],
+            ["Mixolydian",        "Dorian",                  "lower 3"],
+            ["Aeolian",           "Phrygian",                "lower 2"],
+            ["Ionian",            "Mixolydian",              "lower 7"],
+            ["Dorian",            "Aeolian",                 "lower 6"],
+            ["Phrygian",          "Locrian",                 "lower 5"],
+            ["Ionian",            "MelodicMinor",            "lower 3"],
+            ["Dorian",            "DorianFlat9",             "lower 2"],
+            ["MelodicMinor",      "Dorian",                  "lower 7"],
+            ["DorianFlat9",       "Phrygian",                "lower 6"],
+            ["MelodicMinor",      "MelodicMinorFlat9",       "lower 2"],
+            ["DorianFlat9",       "DorianFlat8Flat9",        "lower 1"],
+        ];
 
-            <!-- aeolian -->
-            <circle cx="45%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="orange"
-                onclick="play('Aeolian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="60%" class="nonclick">Aeolian</text>
+        const svg = document.getElementById("graph");
+        let playing = null;
 
-            <!-- dorianb9 -->
-            <circle cx="65%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('DorianFlat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="65%" y="60%" class="nonclick">Dorian b9</text>
+        function draw() {
+            const w = svg.clientWidth, h = svg.clientHeight;
+            const r = 0.04 * Math.hypot(w, h) / Math.SQRT2;
+            const nodeFont = Math.max(11, Math.min(17, r * 0.28));
+            const edgeFont = Math.max(10, nodeFont * 0.8);
+            const pos = {};
+            for (const [id, , x, y] of nodes) pos[id] = [x / 100 * w, y / 100 * h];
 
-            <!-- dorianb9b8 -->
-            <circle cx="85%" cy="60%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('DorianFlat8Flat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="85%" y="60%" class="nonclick">Dorian b9 b8</text>
-
-            <!-- locrian9b4 -->
-            <circle cx="15%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('LocrianNat9Flat4')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="70%" class="nonclick">Locrian9b4</text>
-
-            <!-- locriannat9 -->
-            <circle cx="35%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('LocrianNat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="70%" class="nonclick">Locrian nat9</text>
-
-            <!-- phrygian -->
-            <circle cx="55%" cy="70%" r="4%" stroke="black" stroke-width="3" fill="orange"
-                onclick="play('Phrygian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="55%" y="70%" class="nonclick">Phrygian</text>
-
-            <!-- locrian -->
-            <circle cx="45%" cy="80%" r="4%" stroke="black" stroke-width="3" fill="orange" 
-                onclick="play('Locrian')" />
-            <text text-anchor="middle" alignment-baseline="central" x="45%" y="80%" class="nonclick">Locrian</text>
-
-            <!-- altb9nat9 -->
-            <circle cx="15%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="gray"
-                onclick="play('AlteredFlat9Nat9')" />
-            <text text-anchor="middle" alignment-baseline="central" x="15%" y="90%" class="nonclick">Altered b9 nat9</text>
-            <!-- altered -->
-            <circle cx="35%" cy="90%" r="4%" stroke="black" stroke-width="3" fill="yellow"
-                onclick="play('Altered')" />
-            <text text-anchor="middle" alignment-baseline="central" x="35%" y="90%" class="nonclick">Altered</text>
-
-            <!-- Edges -->
-            <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="1.5" orient="auto">
-                    <polygon points="0 0, 6 1.5, 0 3" />
-                </marker>
-            </defs>
-
-            <!-- First column -->
-            <line x1="19%" y1="10%" x2="28.5%" y2="10%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="19%" y1="30%" x2="28.5%" y2="30%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="19%" y1="50%" x2="28.5%" y2="50%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="19%" y1="70%" x2="28.5%" y2="70%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="19%" y1="90%" x2="28.5%" y2="90%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Second column forwards -->
-            <line x1="38%" y1="12.5%" x2="41%" y2="15.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="38%" y1="32.5%" x2="41%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="38%" y1="52.5%" x2="41%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="38%" y1="72.5%" x2="41%" y2="75.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Third column backward -->
-            <line x1="42%" y1="22.5%" x2="39%" y2="25.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="42%" y1="42.5%" x2="39%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="42%" y1="62.5%" x2="39%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="42%" y1="82.5%" x2="39%" y2="85.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Fourth column forward -->
-            <line x1="48%" y1="22.5%" x2="51%" y2="25.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="48%" y1="42.5%" x2="51%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="48%" y1="62.5%" x2="51%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Fifth column backward -->
-            <line x1="52%" y1="32.5%" x2="49%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="52%" y1="52.5%" x2="49%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="52%" y1="72.5%" x2="49%" y2="75.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Sixth column forwards -->
-            <line x1="58%" y1="32.5%" x2="61%" y2="35.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="58%" y1="52.5%" x2="61%" y2="55.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Seventh column backward -->
-            <line x1="62%" y1="42.5%" x2="59%" y2="45.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="62%" y1="62.5%" x2="59%" y2="65.5%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Last column forwards -->
-            <line x1="69%" y1="40%" x2="78.5%" y2="40%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-            <line x1="69%" y1="60%" x2="78.5%" y2="60%" stroke="#000" stroke-width="5" marker-end="url(#arrowhead)" />
-
-            <!-- Edge labels -->
-            <!-- First column -->
-            <text x="22%" y="9%" class="small">lower 7</text>
-            <text x="22%" y="29%" class="small">lower 6</text>
-            <text x="22%" y="49%" class="small">lower 5</text>
-            <text x="22%" y="69%" class="small">lower 4</text>
-            <text x="22%" y="89%" class="small">lower 3</text>
-
-            <!-- Second forward column -->
-            <text x="35%" y="16%" class="small">lower #5</text>
-            <text x="35%" y="36%" class="small">lower #4</text>
-            <text x="35%" y="56%" class="small">lower 3</text>
-            <text x="35%" y="76%" class="small">lower 9</text>
-
-            <!-- Third backward column -->
-            <text x="35%" y="24%" class="small">lower 7</text>
-            <text x="35%" y="44%" class="small">lower 6</text>
-            <text x="35%" y="64%" class="small">lower 5</text>
-            <text x="35%" y="84%" class="small">lower 4</text>
-
-            <!-- Fourth forward column -->
-            <text x="51%" y="24%" class="small">lower #11</text>
-            <text x="51%" y="44%" class="small">lower 3</text>
-            <text x="51%" y="64%" class="small">lower 2</text>
-
-            <!-- Fifth backward column -->
-            <text x="51%" y="36%" class="small">lower 7</text>
-            <text x="51%" y="56%" class="small">lower 6</text>
-            <text x="51%" y="76%" class="small">lower 5</text>
-
-            <!-- Sixth forward column -->
-            <text x="61%" y="34%" class="small">lower 3</text>
-            <text x="61%" y="54%" class="small">lower 2</text>
-
-            <!-- Seventh backward column -->
-            <text x="61%" y="46%" class="small">lower 7</text>
-            <text x="61%" y="66%" class="small">lower 6</text>
-
-            <!-- Last column -->
-            <text x="72%" y="39%" class="small">lower 2</text>
-            <text x="72%" y="59%" class="small">lower 1</text>
-        </svg>
-        <script>
-            var playing = false;
-            
-            function play(e) {
-                // Skip if audio is currently playing
-                if (playing) {
-                    return
-                }
-            
-                // Otherwise start playing, setting the guard flag
-                var filename = "./scales/audio/" + e + ".mp3";
-                var audio = new Audio(filename);
-                audio.onplaying = function() {
-                    playing = true
-                }
-                audio.onended = function() {
-                    playing = false
-                }
-                audio.play();
+            let out = "";
+            for (const [from, to, label] of edges) {
+                const [x1, y1] = pos[from], [x2, y2] = pos[to];
+                const len = Math.hypot(x2 - x1, y2 - y1);
+                const ux = (x2 - x1) / len, uy = (y2 - y1) / len;
+                const gap = r + 6, head = 11;
+                const sx = x1 + ux * gap, sy = y1 + uy * gap;       // line start
+                const tx = x2 - ux * gap, ty = y2 - uy * gap;       // arrow tip
+                const bx = tx - ux * head, by = ty - uy * head;     // arrow base
+                // Label sits beside the edge's midpoint, on the upper side.
+                const [nx, ny] = uy > 0 ? [uy * Math.sign(ux), -Math.abs(ux)] : [0, -1];
+                const d = edgeFont / 2 + Math.abs(nx) * label.length * edgeFont * 0.28 + 5;
+                const lx = (sx + tx) / 2 + nx * d, ly = (sy + ty) / 2 + ny * d;
+                const ink = (y1 + y2) / 2 < 0.62 * h ? "dark" : "light";
+                out += `<g class="edge ${ink}">
+                    <line x1="${sx}" y1="${sy}" x2="${bx}" y2="${by}"/>
+                    <polygon points="${tx},${ty} ${bx - uy * 5},${by + ux * 5} ${bx + uy * 5},${by - ux * 5}"/>
+                    <text x="${lx}" y="${ly}" font-size="${edgeFont}">${label}</text>
+                </g>`;
             }
-        </script>
-    </body>
+
+            for (const [id, label, , , kind] of nodes) {
+                const [x, y] = pos[id];
+                const lines = label.split("\n");
+                const longest = Math.max(...lines.map(line => line.length));
+                const font = Math.min(nodeFont, 1.75 * r / (longest * 0.62));
+                const tspans = lines.map((line, i) =>
+                    `<tspan x="0" y="${(i - (lines.length - 1) / 2) * font * 1.15}">${line}</tspan>`).join("");
+                out += `<g class="node ${kind}${id === playing ? " playing" : ""}" transform="translate(${x},${y})" onclick="play('${id}')">
+                    <circle r="${r}"/>
+                    <text font-size="${font}">${tspans}</text>
+                </g>`;
+            }
+            svg.innerHTML = out;
+        }
+
+        function play(id) {
+            // Skip if audio is currently playing
+            if (playing) {
+                return;
+            }
+            // Otherwise start playing, setting the guard
+            const audio = new Audio("./scales/audio/" + id + ".mp3");
+            audio.onplaying = () => { playing = id; draw(); };
+            audio.onended = () => { playing = null; draw(); };
+            audio.play();
+        }
+
+        draw();
+        addEventListener("resize", draw);
+    </script>
+</body>
 </html>
