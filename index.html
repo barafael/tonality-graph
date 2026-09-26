@@ -52,61 +52,55 @@
             height: 100%;
         }
 
-        /* Modes are just names on the lattice; hovering shows they can be played. */
+        /* Each mode is a pill in its family's color; hovering lifts it to show it can be played. */
         .mode {
             cursor: pointer;
         }
 
         .mode rect {
-            fill: transparent;
-            transition: fill 0.15s;
+            fill-opacity: 0.88;
+            stroke: rgba(30, 20, 40, 0.18);
+            filter: drop-shadow(0 2px 4px rgba(20, 10, 30, 0.18));
+            transition: filter 0.15s;
         }
 
         .mode:hover rect {
-            fill: rgba(255, 255, 255, 0.28);
+            filter: drop-shadow(0 4px 10px rgba(20, 10, 30, 0.3)) brightness(1.06);
         }
 
         .mode.playing rect {
-            fill: rgba(255, 255, 255, 0.55);
+            stroke: #fff;
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.85));
         }
 
         .mode text {
+            fill: var(--ink-dark);
             font-weight: 650;
             text-anchor: middle;
             dominant-baseline: central;
         }
 
-        .mode .play {
-            opacity: 0;
-            transition: opacity 0.15s;
-        }
+        .church rect { fill: var(--church); }
+        .melmin rect { fill: var(--melmin); }
+        .exotic rect { fill: var(--exotic); }
 
-        .mode:hover .play, .mode.playing .play {
-            opacity: 1;
-        }
-
-        .mode line {
-            stroke-width: 4;
-            stroke-linecap: round;
-        }
-
-        .church line { stroke: var(--church); }
-        .melmin line { stroke: var(--melmin); }
-        .exotic line { stroke: var(--exotic); }
-
-        /* The steps between modes: just what changes, in the direction it goes. */
+        /* The steps between modes: just what changes, in the direction it goes,
+           on a faint pill that switches with the ink where the background turns dark. */
         .step {
-            font-size: 15px;
-            text-anchor: middle;
-            dominant-baseline: central;
-            opacity: 0.75;
             pointer-events: none;
         }
 
-        /* Text switches ink where the background turns dark. */
-        .dark text, text.dark { fill: var(--ink-dark); }
-        .light text, text.light { fill: var(--ink-light); }
-        .mode.playing text { fill: var(--ink-dark); }
+        .step text {
+            font-size: 13px;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .step.dark rect { fill: rgba(255, 248, 240, 0.4); }
+        .step.dark text { fill: var(--ink-dark); }
+        .step.light rect { fill: rgba(25, 18, 40, 0.4); }
+        .step.light text { fill: var(--ink-light); }
 
         .legend {
             position: absolute;
@@ -147,9 +141,9 @@
         }
 
         .legend span {
-            width: 18px;
-            height: 4px;
-            border-radius: 2px;
+            width: 22px;
+            height: 12px;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -223,7 +217,7 @@
         let playing = null;
 
         function draw() {
-            // Where the drawing ends up on screen, to match the ink to the background.
+            // Where the drawing ends up on screen, to match the step ink to the background.
             const box = svg.getBoundingClientRect();
             const scale = Math.min(box.width / w, box.height / h);
             const top = box.top + (box.height - h * scale) / 2;
@@ -239,22 +233,28 @@
                 const leftward = x2 < x1;
                 const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + (leftward ? 180 : 0);
                 const text = leftward ? `\u2190 ${label}` : `${label} \u2192`;
-                out += `<text class="step ${ink(my)}" x="${mx}" y="${my}"
-                    transform="rotate(${angle} ${mx} ${my})">${text}</text>`;
+                out += `<g class="step ${ink(my)}" transform="translate(${mx},${my}) rotate(${angle})">
+                    <rect/><text>${text}</text>
+                </g>`;
             }
 
             for (const [id, label, , , kind] of nodes) {
                 const [x, y] = pos[id];
-                const width = label.length * 13 + 72;
-                out += `<g class="mode ${kind} ${id === playing ? "playing" : ink(y)}"
+                out += `<g class="mode ${kind}${id === playing ? " playing" : ""}"
                     transform="translate(${x},${y})" onclick="play('${id}')">
-                    <rect x="${-width / 2}" y="-24" width="${width}" height="48" rx="24"/>
-                    <text font-size="22">${label}</text>
-                    <text class="play" x="${-width / 2 + 20}" font-size="12">\u25B6</text>
-                    <line x1="-14" x2="14" y1="17" y2="17"/>
+                    <rect/><text font-size="22">${label}</text>
                 </g>`;
             }
             svg.innerHTML = out;
+
+            // Wrap each label in a pill that fits its text.
+            for (const g of svg.querySelectorAll(".mode, .step")) {
+                const t = g.querySelector("text").getBBox();
+                const [px, py] = g.classList.contains("mode") ? [18, 9] : [7, 2];
+                const height = t.height + 2 * py;
+                Object.entries({ x: t.x - px, y: t.y - py, width: t.width + 2 * px, height, rx: height / 2 })
+                    .forEach(([k, v]) => g.querySelector("rect").setAttribute(k, v));
+            }
         }
 
         function play(id) {
