@@ -29,6 +29,17 @@
             background-attachment: fixed;
         }
 
+        /* Toward the left and right fringes, where the scales get exotic, the colors fade out. */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            backdrop-filter: saturate(0.1);
+            -webkit-backdrop-filter: saturate(0.1);
+            mask-image: linear-gradient(to right, black, transparent 38%, transparent 62%, black);
+            -webkit-mask-image: linear-gradient(to right, black, transparent 38%, transparent 62%, black);
+        }
+
         main {
             position: relative;
             width: 100%;
