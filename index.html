@@ -52,46 +52,61 @@
             height: 100%;
         }
 
-        .node {
+        /* Modes are just names on the lattice; hovering shows they can be played. */
+        .mode {
             cursor: pointer;
         }
 
-        .node circle {
-            stroke: rgba(30, 20, 40, 0.55);
-            stroke-width: 1.5;
-            filter: drop-shadow(0 3px 6px rgba(20, 10, 30, 0.25));
-            transition: filter 0.15s, stroke 0.15s, stroke-width 0.15s;
+        .mode rect {
+            fill: transparent;
+            transition: fill 0.15s;
         }
 
-        .node:hover circle {
-            filter: drop-shadow(0 3px 6px rgba(20, 10, 30, 0.25)) brightness(1.08);
+        .mode:hover rect {
+            fill: rgba(255, 255, 255, 0.28);
         }
 
-        .node.playing circle {
-            stroke: #fff;
-            stroke-width: 3;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+        .mode.playing rect {
+            fill: rgba(255, 255, 255, 0.55);
         }
 
-        .node text {
-            fill: var(--ink-dark);
-            font-weight: 600;
+        .mode text {
+            font-weight: 650;
             text-anchor: middle;
             dominant-baseline: central;
+        }
+
+        .mode .play {
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .mode:hover .play, .mode.playing .play {
+            opacity: 1;
+        }
+
+        .mode line {
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+
+        .church line { stroke: var(--church); }
+        .melmin line { stroke: var(--melmin); }
+        .exotic line { stroke: var(--exotic); }
+
+        /* The steps between modes: just what changes, in the direction it goes. */
+        .step {
+            font-size: 15px;
+            text-anchor: middle;
+            dominant-baseline: central;
+            opacity: 0.75;
             pointer-events: none;
         }
 
-        .church circle { fill: var(--church); }
-        .melmin circle { fill: var(--melmin); }
-        .exotic circle { fill: var(--exotic); }
-
-        /* Edges and their labels switch ink where the background turns dark. */
-        .edge line { stroke-width: 2; }
-        .edge text { text-anchor: middle; dominant-baseline: central; }
-        .edge.dark line { stroke: var(--ink-dark); }
-        .edge.dark polygon, .edge.dark text { fill: var(--ink-dark); }
-        .edge.light line { stroke: var(--ink-light); }
-        .edge.light polygon, .edge.light text { fill: var(--ink-light); }
+        /* Text switches ink where the background turns dark. */
+        .dark text, text.dark { fill: var(--ink-dark); }
+        .light text, text.light { fill: var(--ink-light); }
+        .mode.playing text { fill: var(--ink-dark); }
 
         .legend {
             position: absolute;
@@ -132,10 +147,9 @@
         }
 
         .legend span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 1px solid rgba(30, 20, 40, 0.55);
+            width: 18px;
+            height: 4px;
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -150,29 +164,29 @@
         </div>
     </main>
     <script>
-        // [audio file name, label (\n breaks lines), x %, y %, kind]
+        // [audio file name, label, x %, y %, kind]
         const nodes = [
-            ["MixolydianSharp5Sharp11", "Mixo\n#5 #11",        15, 10, "exotic"],
-            ["LydianSharp5",            "Lydian#5",            35, 10, "melmin"],
-            ["Lydian",                  "Lydian",              45, 20, "church"],
-            ["MixolydianSharp11Flat13", "Mixo\n#11 b13",       15, 30, "exotic"],
-            ["MixolydianSharp11",       "Mixo #11",            35, 30, "melmin"],
-            ["Ionian",                  "Ionian",              55, 30, "church"],
-            ["Mixolydian",              "Mixolydian",          45, 40, "church"],
-            ["MelodicMinor",            "Melodic\nMinor",      65, 40, "melmin"],
-            ["MelodicMinorFlat9",       "MelMin b9",           85, 40, "exotic"],
-            ["MixolydianFlat5Flat13",   "Mixo\nb5 b13",        15, 50, "exotic"],
-            ["MixolydianFlat13",        "Mixo b13",            35, 50, "melmin"],
-            ["Dorian",                  "Dorian",              55, 50, "church"],
-            ["Aeolian",                 "Aeolian",             45, 60, "church"],
-            ["DorianFlat9",             "Dorian b9",           65, 60, "melmin"],
-            ["DorianFlat8Flat9",        "Dorian\nb9 b8",       85, 60, "exotic"],
-            ["LocrianNat9Flat4",        "Locrian9b4",          15, 70, "exotic"],
-            ["LocrianNat9",             "Locrian\nnat9",       35, 70, "melmin"],
-            ["Phrygian",                "Phrygian",            55, 70, "church"],
-            ["Locrian",                 "Locrian",             45, 80, "church"],
-            ["AlteredFlat9Nat9",        "Altered\nb9 nat9",    15, 90, "exotic"],
-            ["Altered",                 "Altered",             35, 90, "melmin"],
+            ["MixolydianSharp5Sharp11", "Mixo #5 #11",      15, 10, "exotic"],
+            ["LydianSharp5",            "Lydian#5",         35, 10, "melmin"],
+            ["Lydian",                  "Lydian",           45, 20, "church"],
+            ["MixolydianSharp11Flat13", "Mixo #11 b13",     15, 30, "exotic"],
+            ["MixolydianSharp11",       "Mixo #11",         35, 30, "melmin"],
+            ["Ionian",                  "Ionian",           55, 30, "church"],
+            ["Mixolydian",              "Mixolydian",       45, 40, "church"],
+            ["MelodicMinor",            "Melodic Minor",    65, 40, "melmin"],
+            ["MelodicMinorFlat9",       "MelMin b9",        85, 40, "exotic"],
+            ["MixolydianFlat5Flat13",   "Mixo b5 b13",      15, 50, "exotic"],
+            ["MixolydianFlat13",        "Mixo b13",         35, 50, "melmin"],
+            ["Dorian",                  "Dorian",           55, 50, "church"],
+            ["Aeolian",                 "Aeolian",          45, 60, "church"],
+            ["DorianFlat9",             "Dorian b9",        65, 60, "melmin"],
+            ["DorianFlat8Flat9",        "Dorian b9 b8",     85, 60, "exotic"],
+            ["LocrianNat9Flat4",        "Locrian9b4",       15, 70, "exotic"],
+            ["LocrianNat9",             "Locrian nat9",     35, 70, "melmin"],
+            ["Phrygian",                "Phrygian",         55, 70, "church"],
+            ["Locrian",                 "Locrian",          45, 80, "church"],
+            ["AlteredFlat9Nat9",        "Altered b9 nat9",  15, 90, "exotic"],
+            ["Altered",                 "Altered",          35, 90, "melmin"],
         ];
 
         // [from, to, label]: lowering one note of `from` gives `to`
@@ -213,43 +227,31 @@
             const box = svg.getBoundingClientRect();
             const scale = Math.min(box.width / w, box.height / h);
             const top = box.top + (box.height - h * scale) / 2;
-            const r = 0.04 * Math.hypot(w, h) / Math.SQRT2;
-            const nodeFont = Math.max(11, Math.min(17, r * 0.28));
-            const edgeFont = Math.max(10, nodeFont * 0.8);
+            const ink = y => top + y * scale < 0.62 * innerHeight ? "dark" : "light";
             const pos = {};
             for (const [id, , x, y] of nodes) pos[id] = [x / 100 * w, y / 100 * h];
 
             let out = "";
             for (const [from, to, label] of edges) {
                 const [x1, y1] = pos[from], [x2, y2] = pos[to];
-                const len = Math.hypot(x2 - x1, y2 - y1);
-                const ux = (x2 - x1) / len, uy = (y2 - y1) / len;
-                const gap = r + 6, head = 11;
-                const sx = x1 + ux * gap, sy = y1 + uy * gap;       // line start
-                const tx = x2 - ux * gap, ty = y2 - uy * gap;       // arrow tip
-                const bx = tx - ux * head, by = ty - uy * head;     // arrow base
-                // Label sits beside the edge's midpoint, on the upper side.
-                const [nx, ny] = uy > 0 ? [uy * Math.sign(ux), -Math.abs(ux)] : [0, -1];
-                const d = edgeFont / 2 + Math.abs(nx) * label.length * edgeFont * 0.28 + 5;
-                const lx = (sx + tx) / 2 + nx * d, ly = (sy + ty) / 2 + ny * d;
-                const ink = top + (y1 + y2) / 2 * scale < 0.62 * innerHeight ? "dark" : "light";
-                out += `<g class="edge ${ink}">
-                    <line x1="${sx}" y1="${sy}" x2="${bx}" y2="${by}"/>
-                    <polygon points="${tx},${ty} ${bx - uy * 5},${by + ux * 5} ${bx + uy * 5},${by - ux * 5}"/>
-                    <text x="${lx}" y="${ly}" font-size="${edgeFont}">${label}</text>
-                </g>`;
+                const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+                // Text follows the step's direction but never reads upside down.
+                const leftward = x2 < x1;
+                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI + (leftward ? 180 : 0);
+                const text = leftward ? `\u2190 ${label}` : `${label} \u2192`;
+                out += `<text class="step ${ink(my)}" x="${mx}" y="${my}"
+                    transform="rotate(${angle} ${mx} ${my})">${text}</text>`;
             }
 
             for (const [id, label, , , kind] of nodes) {
                 const [x, y] = pos[id];
-                const lines = label.split("\n");
-                const longest = Math.max(...lines.map(line => line.length));
-                const font = Math.min(nodeFont, 1.75 * r / (longest * 0.62));
-                const tspans = lines.map((line, i) =>
-                    `<tspan x="0" y="${(i - (lines.length - 1) / 2) * font * 1.15}">${line}</tspan>`).join("");
-                out += `<g class="node ${kind}${id === playing ? " playing" : ""}" transform="translate(${x},${y})" onclick="play('${id}')">
-                    <circle r="${r}"/>
-                    <text font-size="${font}">${tspans}</text>
+                const width = label.length * 13 + 72;
+                out += `<g class="mode ${kind} ${id === playing ? "playing" : ink(y)}"
+                    transform="translate(${x},${y})" onclick="play('${id}')">
+                    <rect x="${-width / 2}" y="-24" width="${width}" height="48" rx="24"/>
+                    <text font-size="22">${label}</text>
+                    <text class="play" x="${-width / 2 + 20}" font-size="12">\u25B6</text>
+                    <line x1="-14" x2="14" y1="17" y2="17"/>
                 </g>`;
             }
             svg.innerHTML = out;
