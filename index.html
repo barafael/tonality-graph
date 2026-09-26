@@ -98,7 +98,7 @@
             pointer-events: none;
         }
 
-        .step rect {
+        .step polygon {
             fill: rgba(30, 20, 45, 0.62);
             stroke: rgba(255, 255, 255, 0.25);
         }
@@ -303,23 +303,30 @@
                 </g>`;
             }
 
-            const arrows = { "1,0": "\u2192", "-1,0": "\u2190", "1,1": "\u2198", "-1,1": "\u2199" };
             for (const [from, to, label] of edges) {
                 const [x1, y1] = pos[from], [x2, y2] = pos[to];
-                const arrow = arrows[[Math.sign(x2 - x1), Math.sign(y2 - y1)]];
-                const text = accidentals(x2 < x1 ? `${arrow} ${label}` : `${label} ${arrow}`);
-                out += `<g class="step" transform="translate(${(x1 + x2) / 2},${(y1 + y2) / 2})">
-                    <rect/><text>${text}</text>
+                // Cross the shared border at a right angle. A diamond border for the step
+                // (±a, b) runs along (∓a, b), so its perpendicular is (±b, a).
+                const sx = Math.sign(x2 - x1), sy = Math.sign(y2 - y1);
+                const angle = Math.atan2(sy * a, sx * b) * 180 / Math.PI + (sx < 0 ? 180 : 0);
+                out += `<g class="step" data-dir="${sx < 0 ? -1 : 1}" transform="translate(${(x1 + x2) / 2},${(y1 + y2) / 2}) rotate(${angle})">
+                    <polygon/><text>${accidentals(label)}</text>
                 </g>`;
             }
             svg.innerHTML = out;
 
-            // Fit each step badge to its text.
+            // Wrap each step in a chevron that fits its text: notched at the back, pointed
+            // in the direction of the step (mirrored for leftward steps so text stays upright).
             for (const g of svg.querySelectorAll(".step")) {
                 const t = g.querySelector("text").getBBox();
-                const height = t.height + 4;
-                Object.entries({ x: t.x - 7, y: t.y - 2, width: t.width + 14, height, rx: height / 2 })
-                    .forEach(([k, v]) => g.querySelector("rect").setAttribute(k, v));
+                const d = Number(g.dataset.dir), k = t.height / 2 + 2;
+                // The notch at the back needs room so it doesn't cut into the text.
+                const left = t.x, right = t.x + t.width, notch = k + 3, tip = 4;
+                const [back, front] = d > 0 ? [left - notch, right + tip] : [right + notch, left - tip];
+                const y0 = t.y - 2, y1 = t.y + t.height + 2, mid = (y0 + y1) / 2;
+                const points = [[back, y0], [front, y0], [front + d * k, mid],
+                                [front, y1], [back, y1], [back + d * k, mid]];
+                g.querySelector("polygon").setAttribute("points", points.map(p => p.join(",")).join(" "));
             }
         }
 
