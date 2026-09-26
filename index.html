@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Semitones make a world of difference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
     <style>
         :root {
             --church: #f28f4e;
@@ -21,7 +24,8 @@
 
         /* Bright modes up top, dark modes at the bottom, on a fine grid. */
         body {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            font-family: "Cormorant Garamond", Garamond, Georgia, serif;
+            font-variant-numeric: lining-nums;
             background:
                 linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
                 linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
@@ -52,50 +56,58 @@
             height: 100%;
         }
 
-        /* Each mode is a tile. Tiles that share a border are one step apart. */
+        /* Each mode is a pane of frosted, stained glass. Panes that share a border are one step apart. */
         .mode {
             cursor: pointer;
         }
 
         .mode polygon {
-            fill-opacity: 0.8;
+            stroke: rgba(255, 255, 255, 0.55);
+            stroke-width: 1.2;
+            stroke-linejoin: round;
+            filter: url(#frost);
             transition: filter 0.15s;
         }
 
         .mode:hover polygon {
-            filter: brightness(1.08) drop-shadow(0 4px 10px rgba(20, 10, 30, 0.3));
+            filter: url(#frost) brightness(1.12) drop-shadow(0 4px 12px rgba(20, 10, 30, 0.25));
         }
 
         .mode.playing polygon {
             stroke: #fff;
-            stroke-width: 3;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8));
+            stroke-width: 2.5;
+            filter: url(#frost) brightness(1.15) drop-shadow(0 0 16px rgba(255, 255, 255, 0.75));
         }
 
         .mode text {
-            fill: var(--ink-dark);
-            font-weight: 650;
+            font-weight: 600;
             text-anchor: middle;
             dominant-baseline: central;
+            pointer-events: none;
         }
 
-        .church polygon { fill: var(--church); }
-        .melmin polygon { fill: var(--melmin); }
-        .exotic polygon { fill: var(--exotic); fill-opacity: 0.6; }
+        .mode.dark text { fill: var(--ink-dark); }
+        .mode.light text { fill: var(--ink-light); }
 
-        /* The steps sit on the borders between tiles, as small badges. */
+        .church polygon { fill: url(#glass-church); }
+        .melmin polygon { fill: url(#glass-melmin); }
+        .exotic polygon { fill: url(#glass-exotic); }
+
+        /* The steps sit on the borders between panes, as small badges. */
         .step {
             pointer-events: none;
         }
 
         .step rect {
-            fill: rgba(30, 20, 45, 0.78);
+            fill: rgba(30, 20, 45, 0.62);
+            stroke: rgba(255, 255, 255, 0.25);
         }
 
         .step text {
             fill: var(--ink-light);
-            font-size: 13px;
+            font-size: 17px;
+            font-style: italic;
+            font-weight: 500;
             text-anchor: middle;
             dominant-baseline: central;
         }
@@ -110,7 +122,7 @@
             background: rgba(20, 14, 34, 0.45);
             backdrop-filter: blur(6px);
             color: var(--ink-light);
-            font-size: 14px;
+            font-size: 17px;
         }
 
         .legend h2 {
@@ -127,7 +139,7 @@
                 right: 12px;
                 bottom: 12px;
                 padding: 10px 12px;
-                font-size: 12px;
+                font-size: 14px;
             }
         }
 
@@ -147,6 +159,31 @@
 </head>
 <body>
     <main>
+        <svg viewBox="0 0 1600 1000" style="position: absolute; width: 0; height: 0">
+            <defs>
+                <!-- Stained glass: a pale tint of each family's color, lighter where the light comes in. -->
+                <linearGradient id="glass-church" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#fbc59c" stop-opacity="0.72"/>
+                    <stop offset="1" stop-color="#ee8544" stop-opacity="0.45"/>
+                </linearGradient>
+                <linearGradient id="glass-melmin" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#fdeaa6" stop-opacity="0.72"/>
+                    <stop offset="1" stop-color="#f1c141" stop-opacity="0.45"/>
+                </linearGradient>
+                <linearGradient id="glass-exotic" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#f1eef5" stop-opacity="0.5"/>
+                    <stop offset="1" stop-color="#c9c2d3" stop-opacity="0.28"/>
+                </linearGradient>
+                <!-- Frost: a fine white grain inside the pane. -->
+                <filter id="frost" x="0" y="0" width="1" height="1">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise"/>
+                    <feColorMatrix in="noise" type="matrix" result="grain"
+                        values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0.35 0 0 0 -0.1"/>
+                    <feComposite in="grain" in2="SourceGraphic" operator="in" result="frost"/>
+                    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="frost"/></feMerge>
+                </filter>
+            </defs>
+        </svg>
         <svg id="graph" viewBox="0 0 1600 1000"></svg>
         <div class="legend">
             <h2>Legend</h2>
@@ -233,7 +270,15 @@
             });
         }
 
+        // Show sharps and flats as proper accidentals: "#11" -> "♯11", "b13" -> "♭13".
+        const accidentals = text => text.replace(/#/g, "\u266F").replace(/\bb(?=\d)/g, "\u266D");
+
         function draw() {
+            // Where the drawing ends up on screen, to match the text ink to the background.
+            const box = svg.getBoundingClientRect();
+            const scale = Math.min(box.width / w, box.height / h);
+            const top = box.top + (box.height - h * scale) / 2;
+            const ink = y => top + y * scale < 0.66 * innerHeight ? "dark" : "light";
             const pos = {};
             for (const [id, , x, y] of nodes) pos[id] = [x / 100 * w, y / 100 * h];
             // Neighbors are a diagonal step apart, so diamonds of this size tile the lattice.
@@ -252,9 +297,9 @@
                     tile = [[cx, y - b], [ox, y - 0.45 * b], [ox, y + 0.45 * b], [cx, y + b], [cx + a * side, y]];
                 }
                 const points = inset(tile, 4).map(p => p.join(",")).join(" ");
-                out += `<g class="mode ${kind}${id === playing ? " playing" : ""}" onclick="play('${id}')">
+                out += `<g class="mode ${kind} ${ink(y)}${id === playing ? " playing" : ""}" onclick="play('${id}')">
                     <polygon points="${points}"/>
-                    <text x="${x}" y="${y}" font-size="21">${label}</text>
+                    <text x="${x}" y="${y}" font-size="27">${accidentals(label)}</text>
                 </g>`;
             }
 
@@ -262,7 +307,7 @@
             for (const [from, to, label] of edges) {
                 const [x1, y1] = pos[from], [x2, y2] = pos[to];
                 const arrow = arrows[[Math.sign(x2 - x1), Math.sign(y2 - y1)]];
-                const text = x2 < x1 ? `${arrow} ${label}` : `${label} ${arrow}`;
+                const text = accidentals(x2 < x1 ? `${arrow} ${label}` : `${label} ${arrow}`);
                 out += `<g class="step" transform="translate(${(x1 + x2) / 2},${(y1 + y2) / 2})">
                     <rect/><text>${text}</text>
                 </g>`;
@@ -291,6 +336,7 @@
         }
 
         draw();
+        document.fonts.ready.then(draw);
         addEventListener("resize", draw);
     </script>
 </body>
